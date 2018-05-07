@@ -1,22 +1,18 @@
-import * as React from "react";
-import {
-  Animated,
-  PanResponder,
-  Platform,
-  View,
-  StyleSheet
-} from "react-native";
+/* eslint react/prop-types: 0 */
+
+import React, { Component } from 'react';
+import { Animated, PanResponder, View } from 'react-native';
 
 const styles = {
   container: {
-    justifyContent: "center",
-    alignItems: "center",
-    overflow: "hidden",
-    backgroundColor: "transparent"
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
+    backgroundColor: 'transparent'
   }
 };
 
-export default class ZoomView extends React.Component {
+class ZoomView extends Component {
   static defaultProps = {
     // width of working area
     cropWidth: 100,
@@ -45,7 +41,7 @@ export default class ZoomView extends React.Component {
     // Long press threshold (milliseconds)
     longPressTime: 800,
 
-    //Double-click timer maximum interval
+    // Double-click timer maximum interval
     doubleClickInterval: 175,
     style: {},
     swipeDownThreshold: 230,
@@ -69,7 +65,7 @@ export default class ZoomView extends React.Component {
     responderRelease: () => {
       //
     },
-    //If provided, this will be called everytime the map is moved
+    // If provided, this will be called everytime the map is moved
     onMove: () => {
       //
     },
@@ -77,7 +73,7 @@ export default class ZoomView extends React.Component {
     layoutChange: () => {
       //
     },
-    //function that fires when user swipes down
+    // function that fires when user swipes down
     onSwipeDown: () => {
       //
     }
@@ -133,12 +129,12 @@ export default class ZoomView extends React.Component {
     this.imagePanResponder = PanResponder.create({
       // Request to be a responder：
       // don't respond to single touch to avoid shielding click on child components
-      onStartShouldSetPanResponder: (evt, gestureState) => true,
-      onPanResponderTerminationRequest: (evt, gestureState) => false,
+      onStartShouldSetPanResponder: () => true,
+      onPanResponderTerminationRequest: () => false,
 
       // The View is now responding for touch events.
       // This is the time to highlight and show the user what is happening
-      onPanResponderGrant: (evt, gestureState) => {
+      onPanResponderGrant: evt => {
         // Start gesture operation
         this.lastPositionX = null;
         this.lastPositionY = null;
@@ -227,7 +223,7 @@ export default class ZoomView extends React.Component {
                 this.scale;
             }
 
-            this.imageDidMove("centerOn");
+            this.imageDidMove('centerOn');
 
             Animated.parallel([
               Animated.timing(this.animatedScale, {
@@ -467,7 +463,7 @@ export default class ZoomView extends React.Component {
               }
 
               // Scale before recording
-              const beforeScale = this.scale;
+              // const beforeScale = this.scale;
 
               // Start zooming
               this.scale = zoom;
@@ -475,7 +471,7 @@ export default class ZoomView extends React.Component {
 
               // The picture moves slowly to the center of the two fingers
               // zoom diff
-              const diffScale = this.scale - beforeScale;
+              // const diffScale = this.scale - beforeScale;
               // find the displacement of the center point of both hands from the center of the page
               // move Place
               // this.positionX -= this.centerDiffX * diffScale / this.scale;
@@ -490,7 +486,7 @@ export default class ZoomView extends React.Component {
           }
         }
 
-        this.imageDidMove("onPanResponderMove");
+        this.imageDidMove('onPanResponderMove');
       },
       onPanResponderRelease: (evt, gestureState) => {
         // Cancel long press
@@ -533,7 +529,7 @@ export default class ZoomView extends React.Component {
           this.panResponderReleaseResolve();
         }
       },
-      onPanResponderTerminate: (evt, gestureState) => {
+      onPanResponderTerminate: () => {
         //
       }
     });
@@ -625,7 +621,7 @@ export default class ZoomView extends React.Component {
     // swipeDown overflow is blank
     this.swipeDownOffset = 0;
 
-    this.imageDidMove("onPanResponderRelease");
+    this.imageDidMove('onPanResponderRelease');
   };
 
   componentDidMount() {
@@ -671,7 +667,7 @@ export default class ZoomView extends React.Component {
         duration
       })
     ]).start(() => {
-      this.imageDidMove("centerOn");
+      this.imageDidMove('centerOn');
     });
   }
 
@@ -741,3 +737,5 @@ export default class ZoomView extends React.Component {
     );
   }
 }
+
+export { ZoomView };

@@ -1,54 +1,57 @@
 {
   "name": "react-native-zoom",
   "version": "1.0.0",
-  "description": "react native View for zooming",
-  "main": "index.js",
-  "module": "es/index.js",
-  "private": false,
+  "description": "Zoom view for react native",
+  "main": "./lib/index.js",
+  "scripts": {
+    "lint": "eslint src/",
+    "precommit": "lint-staged",
+    "prettify": "prettier --write 'src/**/*.js'",
+    "build": "babel src --out-dir lib",
+    "do-publish": "npm run lint && npm run build && npm publish"
+  },
+  "files": [
+    "lib",
+    "src"
+  ],
   "repository": {
     "type": "git",
-    "url": "https: //github.com/Whispers12/react-native-zoom"
+    "url": "git+https://github.com/Whispers12/react-native-zoom"
   },
+  "keywords": [
+    "react",
+    "react-native",
+    "zoom",
+    "view",
+    "javascript"
+  ],
   "author": "Andrey Frolov <githubFrolov@yandex.ru>",
   "license": "MIT",
-  "scripts": {
-    "lint": "eslint --fix lib/*.js test/*.js",
-
-    "build":
-      "BABEL_ENV=cjs babel lib --out-dir cjs --ignore test.js && BABEL_ENV=es babel lib --out-dir es --ignore test.js",
-    "prepublish": "npm run build"
-  },
   "bugs": {
-    "url": "https://github.com/treehouse/treehouse_profile.js/issues"
+    "url": "https://github.com/Whispers12/react-native-zoom/issues"
   },
-  "peerDependencies": {
-    "react": "*",
-    "react-native": "*"
-  },
-  "dependencies": {},
-  "keywords": ["zooming", "react-native", "react-native-zoom"],
+  "homepage": "https://github.com/Whispers12/react-native-zoom#readme",
   "devDependencies": {
+    "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-jest": "^22.4.0",
-    "babel-plugin-nanoutils": "^0.1.1",
-    "babel-plugin-transform-flow-comments": "^6.22.0",
-    "babel-preset-env": "^1.6.1",
-    "eslint": "^4.16.0",
-    "eslint-config-standard": "^11.0.0-beta.0",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-node": "^5.2.1",
-    "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "flow-bin": "^0.70.0",
-    "ghooks": "^2.0.2",
-    "jest": "^22.1.4",
-    "regenerator-runtime": "^0.11.1",
-    "rimraf": "^2.6.2",
-    "rollup": "^0.56.5",
-    "rollup-plugin-babel": "^3.0.3",
-    "rollup-plugin-commonjs": "8.3.0",
-    "rollup-plugin-node-resolve": "^3.2.0",
-    "size-limit": "^0.14.0"
+    "babel-core": "^6.23.1",
+    "babel-eslint": "^7.1.1",
+    "babel-jest": "^19.0.0",
+    "babel-loader": "^6.3.2",
+    "babel-preset-react-native": "^1.9.1",
+    "eslint": "^3.17.1",
+    "eslint-plugin-react": "^6.10.0",
+    "eslint-plugin-react-native": "^2.3.1",
+    "lint-staged": "^3.4.0",
+    "prettier": "^1.10.2",
+    "react": "16.3.1",
+    "react-native": "0.55.3",
+    "react-test-renderer": "16.3.1"
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "prettier --single-quote --trailing-comma es5 --write",
+      "git add"
+    ]
   }
 }
