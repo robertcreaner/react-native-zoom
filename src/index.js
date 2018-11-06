@@ -129,7 +129,10 @@ class ZoomView extends Component {
     this.imagePanResponder = PanResponder.create({
       // Request to be a responder：
       // don't respond to single touch to avoid shielding click on child components
-      onStartShouldSetPanResponder: () => true,
+      onStartShouldSetPanResponder: (event, gestureState) => {
+        console.log(gestureState);
+        return true;
+      },
       onPanResponderTerminationRequest: () => false,
 
       // The View is now responding for touch events.
