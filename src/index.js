@@ -1,15 +1,15 @@
 /* eslint react/prop-types: 0 */
 
-import React, { Component } from 'react';
-import { Animated, PanResponder, View } from 'react-native';
+import React, { Component } from "react";
+import { Animated, PanResponder, View } from "react-native";
 
 const styles = {
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    overflow: 'hidden',
-    backgroundColor: 'transparent'
-  }
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
+    backgroundColor: "transparent",
+  },
 };
 
 class ZoomView extends Component {
@@ -76,12 +76,12 @@ class ZoomView extends Component {
     // function that fires when user swipes down
     onSwipeDown: () => {
       //
-    }
+    },
   };
 
   state = {
     centerX: 0.5,
-    centerY: 0.5
+    centerY: 0.5,
   };
 
   constructor(props) {
@@ -130,6 +130,15 @@ class ZoomView extends Component {
       // Request to be a responder：
       // don't respond to single touch to avoid shielding click on child components
       onStartShouldSetPanResponder: () => true,
+
+      onMoveShouldSetPanResponder: _evt => {
+        if (_evt.nativeEvent.changedTouches.length === 1) {
+          return false;
+        } else {
+          return true;
+        }
+      },
+
       onPanResponderTerminationRequest: () => false,
 
       // The View is now responding for touch events.
@@ -213,31 +222,29 @@ class ZoomView extends Component {
               // Find the displacement of the center point of both hands from the center of the page
               // move Place
               this.positionX =
-                (this.props.cropWidth / 2 - this.doubleClickX) *
-                diffScale /
+                ((this.props.cropWidth / 2 - this.doubleClickX) * diffScale) /
                 this.scale;
 
               this.positionY =
-                (this.props.cropHeight / 2 - this.doubleClickY) *
-                diffScale /
+                ((this.props.cropHeight / 2 - this.doubleClickY) * diffScale) /
                 this.scale;
             }
 
-            this.imageDidMove('centerOn');
+            this.imageDidMove("centerOn");
 
             Animated.parallel([
               Animated.timing(this.animatedScale, {
                 toValue: this.scale,
-                duration: 100
+                duration: 100,
               }),
               Animated.timing(this.animatedPositionX, {
                 toValue: this.positionX,
-                duration: 100
+                duration: 100,
               }),
               Animated.timing(this.animatedPositionY, {
                 toValue: this.positionY,
-                duration: 100
-              })
+                duration: 100,
+              }),
             ]).start();
           } else {
             this.lastClickTime = new Date().getTime();
@@ -486,7 +493,7 @@ class ZoomView extends Component {
           }
         }
 
-        this.imageDidMove('onPanResponderMove');
+        this.imageDidMove("onPanResponderMove");
       },
       onPanResponderRelease: (evt, gestureState) => {
         // Cancel long press
@@ -531,7 +538,7 @@ class ZoomView extends Component {
       },
       onPanResponderTerminate: () => {
         //
-      }
+      },
     });
   }
 
@@ -559,7 +566,7 @@ class ZoomView extends Component {
       this.scale = 1;
       Animated.timing(this.animatedScale, {
         toValue: this.scale,
-        duration: 100
+        duration: 100,
       }).start();
     }
 
@@ -569,7 +576,7 @@ class ZoomView extends Component {
       this.positionX = 0;
       Animated.timing(this.animatedPositionX, {
         toValue: this.positionX,
-        duration: 100
+        duration: 100,
       }).start();
     }
 
@@ -578,7 +585,7 @@ class ZoomView extends Component {
       this.positionY = 0;
       Animated.timing(this.animatedPositionY, {
         toValue: this.positionY,
-        duration: 100
+        duration: 100,
       }).start();
     }
 
@@ -597,7 +604,7 @@ class ZoomView extends Component {
       }
       Animated.timing(this.animatedPositionY, {
         toValue: this.positionY,
-        duration: 100
+        duration: 100,
       }).start();
     }
 
@@ -607,11 +614,11 @@ class ZoomView extends Component {
       this.positionY = 0;
       Animated.timing(this.animatedPositionX, {
         toValue: this.positionX,
-        duration: 100
+        duration: 100,
       }).start();
       Animated.timing(this.animatedPositionY, {
         toValue: this.positionY,
-        duration: 100
+        duration: 100,
       }).start();
     }
 
@@ -621,7 +628,7 @@ class ZoomView extends Component {
     // swipeDown overflow is blank
     this.swipeDownOffset = 0;
 
-    this.imageDidMove('onPanResponderRelease');
+    this.imageDidMove("onPanResponderRelease");
   };
 
   componentDidMount() {
@@ -656,18 +663,18 @@ class ZoomView extends Component {
     Animated.parallel([
       Animated.timing(this.animatedScale, {
         toValue: this.scale,
-        duration
+        duration,
       }),
       Animated.timing(this.animatedPositionX, {
         toValue: this.positionX,
-        duration
+        duration,
       }),
       Animated.timing(this.animatedPositionY, {
         toValue: this.positionY,
-        duration
-      })
+        duration,
+      }),
     ]).start(() => {
-      this.imageDidMove('centerOn');
+      this.imageDidMove("centerOn");
     });
   }
 
@@ -678,7 +685,7 @@ class ZoomView extends Component {
         positionX: this.positionX,
         positionY: this.positionY,
         scale: this.scale,
-        zoomCurrentDistance: this.zoomCurrentDistance
+        zoomCurrentDistance: this.zoomCurrentDistance,
       });
   }
 
@@ -701,15 +708,15 @@ class ZoomView extends Component {
     const animateConf = {
       transform: [
         {
-          scale: this.animatedScale
+          scale: this.animatedScale,
         },
         {
-          translateX: this.animatedPositionX
+          translateX: this.animatedPositionX,
         },
         {
-          translateY: this.animatedPositionY
-        }
-      ]
+          translateY: this.animatedPositionY,
+        },
+      ],
     };
 
     return (
@@ -718,7 +725,7 @@ class ZoomView extends Component {
           ...styles.container,
           ...this.props.style,
           width: this.props.cropWidth,
-          height: this.props.cropHeight
+          height: this.props.cropHeight,
         }}
         {...this.imagePanResponder.panHandlers}
       >
@@ -727,7 +734,7 @@ class ZoomView extends Component {
             onLayout={this.handleLayout.bind(this)}
             style={{
               width: this.props.imageWidth,
-              height: this.props.imageHeight
+              height: this.props.imageHeight,
             }}
           >
             {this.props.children}
